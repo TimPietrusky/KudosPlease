@@ -12,8 +12,8 @@ A simple Kudos widget with no dependencies. And it's free.
 
 1. Add ```kudosplease-min.js``` to your page
 2. Add CSS
-  * Add ```kudosplease.css``` to your page if you don't want to change the CSS
-  * Import ```kudoesplease.scss``` into your main SCSS and overwrite the variables or other stuff
+  1. Add ```kudosplease.css``` to your page if you don't want to change the CSS
+  2. Import ```kudoesplease.scss``` into your main SCSS and overwrite the variables or other stuff
 3. Create a new instance
 
 ```javascript

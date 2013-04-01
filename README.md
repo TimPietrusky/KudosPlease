@@ -2,11 +2,11 @@
 
 A simple Kudos widget with no dependencies. And it's free. 
 
+[![Kudos Please preview](https://raw.github.com/TimPietrusky/KudosPlease/master/img/kudosplease_1337.png)](http://codepen.io/TimPietrusky/pen/acBCf)
+
 ## Live example
 
 [Kudos Please @CodePen](http://codepen.io/TimPietrusky/pen/acBCf)
-
-[![Kudos Please preview](https://raw.github.com/TimPietrusky/KudosPlease/master/img/kudosplease_1337.png)](http://codepen.io/TimPietrusky/pen/acBCf)
 
 ## How to use it on my page?
 

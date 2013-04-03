@@ -3,18 +3,23 @@
 class KudosPlease {
   protected $request;
   protected $output;
+  protected $url;
     
   function __construct() {
     $this->request = $_SERVER['REQUEST_METHOD'];
     
-    $this->connect();
-    
-    switch ($this->request) {
-      case 'GET' : $this->get();
-      break;
+    if (isset($_GET['url'])) {
+      $this->url = urldecode($_GET['url']);
+      
+        $this->connect();
         
-      case 'POST' : $this->post();
-      break;
+        switch ($this->request) {
+          case 'GET' : $this->get();
+          break;
+            
+          case 'POST' : $this->post();
+          break;
+        }
     }
     
     $this->output();
@@ -45,18 +50,27 @@ class KudosPlease {
    * Returns the current Kudos amount.
    */
   public function get() {
-    $query = 'SELECT kudos FROM kudos_codepen';
+    $query = 'SELECT * FROM kudosplease where url = \'' . $this->url . '\'';
     $result = mysql_query($query);
     $row = mysql_fetch_object($result);
     
-    $this->output = $row->kudos;
+    // Create new row for the unkown url
+    if (empty($row->kudos)) {
+      $query = 'INSERT IGNORE INTO kudosplease (url, kudos) VALUES (\'' . $this->url . '\', 0)';
+      mysql_query($query);
+      
+      $this->output = 0;
+    // Show the amount
+    } else {
+      $this->output = $row->kudos;
+    }
   }
   
   /*
    * Increase the Kudos amount and return the new amount. 
    */
   public function post() {
-    $query = 'UPDATE kudos_codepen SET kudos = kudos + 1';
+    $query = 'UPDATE kudosplease SET kudos = kudos + 1';
     mysql_query($query);
     
     $this->get();

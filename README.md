@@ -15,12 +15,6 @@ A simple Kudos widget with no dependencies. And it's free.
   * Add ```https://raw.github.com/TimPietrusky/KudosPlease/master/css/kudosplease.css``` to your page if you don't want to change the CSS
   * Import ```kudoesplease.scss``` into your main SCSS and overwrite the variables or other stuff
 3. Create a new instance of KudosPlease  
-  * **el** - the class of the kudos dom element
-  * **duration** - seconds until the kudos amount is increased
-  * **status** - adds a class to the widget depending on the status
-    * alpha - amount of 0
-    * beta - amount > 0
-    * gamma - kudos given (finish)
 
 ```javascript
   /*
@@ -36,6 +30,14 @@ A simple Kudos widget with no dependencies. And it's free.
     }
   });
 ```
+### Properties
+  
+* **el** - the class of the kudos dom element
+* **duration** - seconds until the kudos amount is increased
+* **status** - adds a class to the widget depending on the status
+    * alpha - amount of 0
+    * beta - amount > 0
+    * gamma - kudos given (finish)
 
 
 

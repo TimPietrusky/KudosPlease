@@ -1,11 +1,11 @@
 @import "compass/css3";
-@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+@import url(http://weloveiconfonts.com/api/?family=fontelico);
 
 /*
- * Use FontAwesome from weloveiconfonts.com
+ * Use Fontelico from weloveiconfonts.com
  */
-[class*="fontawesome-"]:before {
-  font-family: 'FontAwesome', sans-serif;
+[class*="fontelico-"]:before {
+  font-family: 'fontelico', sans-serif;
   font-weight:normal;
 } 
 
@@ -16,20 +16,21 @@ $kudos_duration: 1.5s;
 $kudos_duration_finish: .45s;
 $kudos_width: 6em;
 $kudos_height: 6em;
-$kudos_color_alpha: #fff;
-$kudos_color_beta: #cc3d39;
+$kudos_color_alpha: #fff; // default
+$kudos_color_beta: $color-beta; // active
+$kudos_color_gamma: $color-delta; // default border
 
 .kudos {
   color:#000;
   position:relative;
   width:$kudos_width;
   height:$kudos_height;
-  margin:.5em auto 1.5em auto;
+  margin:.95em auto 1.5em auto;
   background:$kudos_color_alpha;
   box-shadow:
-    inset 0 0 0 .25em #000,
+    inset 0 0 0 .25em $kudos_color_gamma,
     inset 0 0 0 $kudos_width / 3 $kudos_color_alpha,
-    inset 0 0 0 $kudos_width #000
+    inset 0 0 0 $kudos_width $kudos_color_gamma
   ; 
   line-height:$kudos_height;
   text-align:center;
@@ -38,13 +39,15 @@ $kudos_color_beta: #cc3d39;
   
   &:before {
     @include transition(font-size $kudos_duration_finish ease-in);
-    font-size:0;
+    font-size:1.45em;
+    color:$kudos_color_alpha;
+    line-height:1.45;
   }
   
   &.active {
     @include transition(box-shadow $kudos_duration linear);
     box-shadow:
-      inset 0 0 0 .25em #000,
+      inset 0 0 0 .25em $kudos_color_gamma,
       inset 0 0 0 0 $kudos_color_alpha,
       inset 0 0 0 .75em rgba($kudos_color_beta, .75),
       inset 0 0 0 $kudos_width $kudos_color_beta
@@ -69,14 +72,10 @@ $kudos_color_beta: #cc3d39;
       inset 0 0 0 $kudos_width $kudos_color_beta
     ;
       
-    &:hover {
-      @include transform(scale(1.25, 1.25), translateY(-.75em));
-    }
-    
     &:before {  
-      font-size:2.25em;
+      font-size:1.45em;
       color:$kudos_color_alpha;
-      line-height:$kudos_height / 2.125;
+      line-height:1.45;
     }
   }
   

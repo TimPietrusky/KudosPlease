@@ -1,0 +1,159 @@
+@import "compass/css3/_shared", "_keyframes";
+
+$default-animation-name: none;
+$default-animation-duration: 0;
+$default-animation-timing-function: ease;
+$default-animation-iteration-count: 1;
+$default-animation-direction: normal;
+$default-animation-play-state: running;
+$default-animation-delay: 0;
+$default-animation-fill-mode: none;
+
+@mixin animation-name(
+  $name-1: $default-animation-name,
+  $name-2: false,
+  $name-3: false,
+  $name-4: false,
+  $name-5: false,
+  $name-6: false,
+  $name-7: false,
+  $name-8: false,
+  $name-9: false,
+  $name-10: false
+) {
+  $name: compact($name-1, $name-2, $name-3, $name-4, $name-5, $name-6, $name-7, $name-8, $name-9, $name-10);
+  @include experimental(animation-name, $name);
+}
+
+@mixin animation-duration(
+  $duration-1: $default-animation-duration,
+  $duration-2: false,
+  $duration-3: false,
+  $duration-4: false,
+  $duration-5: false,
+  $duration-6: false,
+  $duration-7: false,
+  $duration-8: false,
+  $duration-9: false,
+  $duration-10: false
+) {
+  $duration: compact($duration-1, $duration-2, $duration-3, $duration-4, $duration-5, $duration-6, $duration-7, $duration-8, $duration-9, $duration-10);
+  @include experimental(animation-duration, $duration);
+}
+
+@mixin animation-timing-function(
+  $timing-function-1: $default-animation-timing-function,
+  $timing-function-2: false,
+  $timing-function-3: false,
+  $timing-function-4: false,
+  $timing-function-5: false,
+  $timing-function-6: false,
+  $timing-function-7: false,
+  $timing-function-8: false,
+  $timing-function-9: false,
+  $timing-function-10: false
+) {
+  $timing-function: compact($timing-function-1, $timing-function-2, $timing-function-3, $timing-function-4, $timing-function-5, $timing-function-6, $timing-function-7, $timing-function-8, $timing-function-9, $timing-function-10);
+  @include experimental(animation-timing-function, $timing-function);
+}
+
+@mixin animation-iteration-count(
+  $iteration-count-1: $default-animation-count,
+  $iteration-count-2: false,
+  $iteration-count-3: false,
+  $iteration-count-4: false,
+  $iteration-count-5: false,
+  $iteration-count-6: false,
+  $iteration-count-7: false,
+  $iteration-count-8: false,
+  $iteration-count-9: false,
+  $iteration-count-10: false
+) {
+  $iteration-count: compact($iteration-count-1, $iteration-count-2, $iteration-count-3, $iteration-count-4, $iteration-count-5, $iteration-count-6, $iteration-count-7, $iteration-count-8, $iteration-count-9, $iteration-count-10);
+  @include experimental(animation-iteration-count, $iteration-count);
+}
+
+@mixin animation-direction(
+  $direction-1: $default-animation-direction,
+  $direction-2: false,
+  $direction-3: false,
+  $direction-4: false,
+  $direction-5: false,
+  $direction-6: false,
+  $direction-7: false,
+  $direction-8: false,
+  $direction-9: false,
+  $direction-10: false
+) {
+  $direction: compact($direction-1, $direction-2, $direction-3, $direction-4, $direction-5, $direction-6, $direction-7, $direction-8, $direction-9, $direction-10);
+  @include experimental(animation-direction, $direction);
+}
+
+@mixin animation-play-state(
+  $play-state-1: $default-animation-play-state,
+  $play-state-2: false,
+  $play-state-3: false,
+  $play-state-4: false,
+  $play-state-5: false,
+  $play-state-6: false,
+  $play-state-7: false,
+  $play-state-8: false,
+  $play-state-9: false,
+  $play-state-10: false
+) {
+  $play-state: compact($play-state-1, $play-state-2, $play-state-3, $play-state-4, $play-state-5, $play-state-6, $play-state-7, $play-state-8, $play-state-9, $play-state-10);
+  @include experimental(animation-play-state, $play-state);
+}
+
+@mixin animation-delay(
+  $delay-1: $default-animation-delay,
+  $delay-2: false,
+  $delay-3: false,
+  $delay-4: false,
+  $delay-5: false,
+  $delay-6: false,
+  $delay-7: false,
+  $delay-8: false,
+  $delay-9: false,
+  $delay-10: false
+) {
+  $delay: compact($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10);
+  @include experimental(animation-delay, $delay);
+}
+
+@mixin animation(
+  $animation-1: default,
+  $animation-2: false,
+  $animation-3: false,
+  $animation-4: false,
+  $animation-5: false,
+  $animation-6: false,
+  $animation-7: false,
+  $animation-8: false,
+  $animation-9: false,
+  $animation-10: false
+) {
+  @if $animation-1 == default {
+    $animation-1: -compass-space-list(compact($default-animation-name, $default-animation-duration, $default-animation-timing-function, $default-animation-delay, $default-animation-iteration-count, $default-animation-direction, $default-animation-fill-mode))
+  }
+
+  $animation: compact($animation-1, $animation-2, $animation-3, $animation-4, $animation-5, $animation-6, $animation-7, $animation-8, $animation-9, $animation-10);
+  @include experimental(animation, $animation);
+}
+
+// Simple animation with named arguments
+@mixin animation-simple(
+  $name: $default-animation-name,
+  $duration: $default-animation-duration,
+  $timing-function: $default-animation-timing-function,
+  $delay: $default-animation-delay,
+  $iteration-count: $default-animation-iteration-count,
+  $direction: $default-animation-direction
+) {
+  @include experimental(animation, $name $duration $timing-function $delay $iteration-count $direction);
+}
+
+// This one is from https://developer.mozilla.org/en/CSS/animation-fill-mode
+@mixin animation-fill-mode($fill-mode) {
+  @include experimental(animation-fill-mode, $fill-mode);
+}

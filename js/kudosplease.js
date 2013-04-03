@@ -123,6 +123,7 @@ KudosPlease = (function() {
     if (_$.status != undefined) {
       _$.removeClass(el, _$.currentStatus);
       _$.addClass(el, _$.status[state]);
+      _$.currentStatus = _$.status[state];
     }
   };
   
@@ -225,13 +226,16 @@ KudosPlease = (function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
         var amount = xhr.responseText;
         el.setAttribute('data-amount', amount);
-        _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+
+        if (type == 'GET') {
+          _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+        }
       }
     }
     
     var url = "?url="+encodeURIComponent(el.getAttribute('data-url'));
     // Open request
-    xhr.open(type, "http://timpietrusky.koding.com/codepen/kudos/index.php" + url, true);
+    xhr.open(type, "http://api.kudosplease.com/" + url, true);
     xhr.send();
   };
   

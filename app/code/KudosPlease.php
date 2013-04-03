@@ -4,13 +4,15 @@ class KudosPlease {
   protected $request;
   protected $output;
   protected $url;
+  protected $link;
     
   function __construct() {
+
     $this->request = $_SERVER['REQUEST_METHOD'];
     
     if (isset($_GET['url'])) {
       $this->url = urldecode($_GET['url']);
-      
+
         $this->connect();
         
         switch ($this->request) {
@@ -30,11 +32,12 @@ class KudosPlease {
    */
   protected function connect() {
     // Connect to db
-    $link = mysql_connect('host', 'user', 'password');
-    if (!$link) {
+    $this->link = mysql_connect('localhost', '24963m27407_5', 'xfdLLYYm');
+    if (!$this->link) {
       die(mysql_error());
     }
-    mysql_select_db('database', $link);
+
+    mysql_select_db('24963m27407_5', $this->link);
   }
   
   /**
@@ -51,15 +54,14 @@ class KudosPlease {
    */
   public function get() {
     $query = 'SELECT * FROM kudosplease where url = \'' . $this->url . '\'';
-    $result = mysql_query($query);
+    $result = mysql_query($query, $this->link);
     $row = mysql_fetch_object($result);
-    
+
     // Create new row for the unkown url
     if (empty($row->kudos)) {
       $query = 'INSERT IGNORE INTO kudosplease (url, kudos) VALUES (\'' . $this->url . '\', 0)';
-      mysql_query($query);
-      
       $this->output = 0;
+
     // Show the amount
     } else {
       $this->output = $row->kudos;
@@ -71,7 +73,7 @@ class KudosPlease {
    */
   public function post() {
     $query = 'UPDATE kudosplease SET kudos = kudos + 1 WHERE url = \'' . $this->url . '\'';
-    mysql_query($query);
+    mysql_query($query, $this->link);
     
     $this->get();
   }

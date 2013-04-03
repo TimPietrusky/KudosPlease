@@ -1,0 +1,223 @@
+@charset "UTF-8";
+
+/**
+ * Assets
+ */
+@import "assets/assets";
+
+/*
+ * Kudos Please widget
+ */
+$kudos_color_alpha: $color-alpha;
+
+.kudos {
+  font-size:2em;
+}
+
+/*
+ * Fonts
+ */
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
+
+/**
+ * Style
+ */
+body {
+  height:100%;
+  position:relative;
+  font: 1.5em "Source Sans Pro", sans-serif;
+  color:#fff;
+  background:$color-epsilon;
+}
+
+h1 {
+  font-size:2.5em;
+  font-weight: 700;
+  padding:0 .75em;
+  text-transform: uppercase;
+}
+
+h2 {
+  color:$color-gamma;
+  border-bottom:.25em solid #fff;
+  padding: 0 0 .25em 0;
+  margin:.5em 0 .25em 0;
+}
+
+a {
+  color:$color-gamma;
+  text-decoration: none;
+  border-bottom: .15em solid rgba($color-gamma, 1);
+  padding-bottom:.25em;
+
+  @include transition(
+    color .25s ease-in-out,
+    padding .25s ease-in-out
+  );
+
+  &:hover {
+    color:rgba($color-gamma, .5);
+    padding-bottom:.05em;
+  }
+}
+
+button {
+  background: darken($color-alpha, 10%);
+  border:none;
+  color: #fff;
+  font-size:1.45em;
+  line-height:1em;
+  padding: .75em 0;
+  font-family:inherit;
+
+  &::-moz-focus-inner {
+    border:none;
+  }
+
+  @include transition(
+    background .25s ease-in-out,
+    color .25s ease-in-out
+  );
+
+  &:hover {
+      color:#333;
+      background:lighten($color-alpha, 15%);
+  }
+}
+
+img {
+  max-width:100%;
+}
+
+p {
+  padding:.25em .75em;
+}
+
+pre {
+  font-size:.8em;
+}
+
+ul {
+  list-style-type:square;
+
+  > li {
+    margin: .5em 0;
+  }
+}
+
+/*
+ * Article
+ */
+article {
+  margin:1em 0 1em 0;
+  padding:0 0;
+}
+
+article[data-high="1"] {
+  margin-top:0;
+  background:#fff;
+
+  > section {
+    color:$color-alpha;
+  }
+}
+
+article[data-high="2"] {
+  background:#fff;
+
+  > section {
+    background:$color-alpha;
+
+    div[data-type="1"] {
+      background:#fff;
+      min-height:17em;
+    }
+
+    div[data-type="2"] {
+      padding-top:.5em;
+    }
+  }
+}
+
+article[data-high="3"] {
+  padding:1em 0;
+
+  > section {
+    div[data-type="1"] {
+      background:#fff;
+    }
+  }
+}
+
+article[data-high="4"] {
+  background:#fff;
+  border-top:.45em solid $color-gamma;
+  border-bottom:.45em solid $color-gamma;
+
+  > section {
+    padding-top:1em;
+    padding-bottom:1em;
+    color:#000;
+  }
+}
+
+
+article[data-high="5"] {
+  background:$color-delta;
+  margin-bottom:0;
+  padding-top:1em;
+
+  > section {
+    color:#000;
+  }
+}
+
+/*
+ * Section
+ */
+section {
+  @include breakpoint(baby-bear) {
+     padding:0 .75em;
+  }
+
+  &[data-cols="2"] {
+    > div:nth-child(odd) { 
+      padding: 0 .5em 0 0;
+
+      @include breakpoint(baby-bear) {
+        padding: 0 0 .5em 0;
+      }
+    }
+  }
+
+  &[data-cols="3"] {
+    > div:nth-of-type(1) {
+      padding: 0 .5em 0 0;
+    }
+
+    > div:nth-of-type(2) {
+      padding: 0 .5em;
+
+      @include breakpoint(mama-bear) {
+        padding: 0 0 0 .5em;
+      }
+
+      @include breakpoint(baby-bear) {
+        padding: 0 0 .5em 0;
+      }
+    }
+
+    > div:nth-of-type(3) {
+      padding: 0 0 0 .5em;
+
+      @include breakpoint(mama-bear) {
+        padding: 0;
+      }
+
+      @include breakpoint(baby-bear) {
+        padding: 0 0 .5em 0;
+      }
+    }
+  }
+}

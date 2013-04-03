@@ -18,28 +18,21 @@ A simple Kudos widget with no dependencies. And it's free.
   ```html
   <div class="kudos" data-amount="0" data-url="domain.url/my-page"></div>
   ```
-  
-  ### Properties
-
-  * **data-amount** - the amount of kudos you received
-  * **data-url** - the url to the specific site you want to track (without http://)
-
 
 3. Create a new instance of ```KudosPlease``` in JavaScript  
-
-```javascript
-/*
- * Create Kudos Please widget
- */
- var kudosPlease = new KudosPlease({ 
-  el : '.kudos',
-  duration : 1500,
-  status : {
-    alpha : 'fontawesome-star',
-    beta : 'fontawesome-glass',
-    gamma : 'fontawesome-bolt'
-  }
-});
+  ```javascript
+  /*
+   * Create Kudos Please widget
+   */
+   var kudosPlease = new KudosPlease({ 
+    el : '.kudos',
+    duration : 1500,
+    status : {
+      alpha : 'fontawesome-star',
+      beta : 'fontawesome-glass',
+      gamma : 'fontawesome-bolt'
+    }
+  });
 ```
 ### Properties
   
@@ -49,6 +42,11 @@ A simple Kudos widget with no dependencies. And it's free.
     * alpha - amount of 0
     * beta - amount > 0
     * gamma - kudos given (finish)
+    
+### Properties
+
+  * **data-amount** - the amount of kudos you received
+  * **data-url** - the url to the specific site you want to track (without http://)
 
 
 

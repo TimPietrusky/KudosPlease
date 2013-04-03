@@ -31,101 +31,115 @@
 
   <article data-high="1">
     <section data-cols="1">
-      <div class="meme">
-        <h1 class="title" spellcheck="false"></h1>
-        <img class="picture" src="" alt="Grumpy Cat hates you">
+      <div>
+        <h1>Kudos Please</h1>
       </div>
     </section>
   </article>
   
-  <article data-high="3">
-    <section data-cols="3" class="editor"></section>
-  </article>
-  
   <article data-high="2">
     <section data-cols="2">
-      <div>
-        <section data-cols="2">
-          <div>
-            <button class="edit">Edit</button>
-          </div>
-          <div>
-            <button class="random">Random</button>
-          </div>
-        </section>
+      <div data-type="1">
+        <div class="kudos" data-amount="0" data-url="kudosplease.com"></div>
       </div>
-      
-      <div>
-        <section data-cols="2">
-        <div>
-          <a data-type="2" href="http://twitter.com/share?text=@GrumpyCathatesyou+says+&url=http://grumpycathatesyou.com/" target="_blank">
-          <button class="share" >
-            Tweet
-          </button>
-          </a>
-        </div>
-        <div>
-          <button class="share" data-type="1">Share</button>
-        </div>
-        </section>
+      <div data-type="2">
+        <p>An one-element <b>kudos widget</b> with no dependencies.</p>
+        <p>Works on touch and normal devices. </p>
+        <p>The widget interacts with the <b>Kudos Please API</b> so you don't have to worry about saving the amount.</p>
+        
+        <p>
+          <a href="https://github.com/TimPietrusky/KudosPlease" target="_blank">
+          <button class="button--alpha">Fork it on GitHub</button>
+        </a>
+        </p>  
       </div>
     </section>
   </article>
   
   <article data-high="4">
-    <section data-cols="1">
-      <div>
-        Handcrafted 2013 by <a href="http://twitter.com/TimPietrusky" target="_blank">@TimPietrusky</a>.
+    <section data-cols="2">
+      <div data-type="1">
+        <h2>1. Insert JS / CSS</h2>
+        <b>JS</b>
+        <pre><code class="language-markup">&lt;script src="kudosplease-min.js">&lt;/script></code></pre>
+        <b>CSS</b>
+        <pre><code class="language-markup">&lt;link rel="stylesheet" href="kudosplease-min.css"></code></pre>
+      </div>
+      <div data-type="2">
+        <h2>2. Insert HTML</h2>
+        <pre><code class="language-markup">&lt;div class="kudos" data-amount="0" data-url="domain.tld/my-awesome-article">&lt;/div></code></pre>
+        <ul>
+          <li><b>data-amount</b> - the amount of kudos for a specific url</li>
+          <li><b>data-url</b> - the url to a specific site which receives the widget (without http://)</li>
+        </ul>
       </div>
     </section>
     
     <section data-cols="1">
-      <div>
-        <a href="https://github.com/TimPietrusky/grumpycathatesyou" target="_blank">Fork it on GitHub.</a>
-      </div>
-    </section>
-    
-    <section data-cols="1">
-      <div>
-        Grumpy Cat pictures by <a href="http://www.grumpycats.com/" target="_blank">Grumpy Cat Limited</a>.
+      <div data-type="3">
+      
+        <h2>3. Create the widget</h2>
+<pre><code class="language-javascript">var kudosPlease = new KudosPlease({ 
+    el : '.kudos',
+    duration : 1500,
+    status : {
+      alpha: 'fontelico-emo-shoot',
+      beta: 'fontelico-emo-shoot',
+      gamma: 'fontelico-emo-beer'
+    }
+  });</code></pre>
+        <ul>
+          <li><b>el</b> - the class of the kudos dom element</li>
+          <li><b>duration</b> - seconds until the kudos amount is increased</li>
+          <li>
+            <b>status</b> - adds a class to the widget depending on the status
+            <ul>
+              <li><b>alpha</b> - amount of 0</li>
+              <li><b>beta</b> - amount > 0</li>
+              <li><b>gamma</b> - kudos given (finish)</li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </section>
   </article>
   
-  <div class="message"></div>
+  <article data-high="3">
+    <section data-cols="2">
+        <div>
+          <a href="http://twitter.com/share?text=Kudos+Widget+without+any+dependencies+and+Kudos+API+&url=http://kudosplease.com/" target="_blank">
+          <button>
+            Spread the word
+          </button>
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/TimPietrusky/KudosPlease" target="_blank">
+          <button>
+            Fork it on GitHub
+          </button>
+          </a>
+        </div>
+    </section>
+  </article>
   
-  <!-- Template: Editor -->
-  <script id="template_editor" type="text/template">
-    <div class="editor--title">
-      <h2>Title</h2>
-    </div>
-
-    <div class="editor--picture">
-      <h2>Grumpy Cat</h2>
-    </div>
-
-    <div class="editor--font">
-      <h2>Font</h2>
-    </div>
-  </script>
-
-  <!-- Template: A picture of the PictureEditor -->
-  <script id="template_pictureEditor_picture" type="text/template">
-     <img class="preview" src="/img/grumpycats/<%= img %>.jpg" alt="Grumpy Cat <%= img %>">
-  </script>
-
-  <!-- Template: A picture of the PictureEditor -->
-  <script id="template_fontEditor_font" type="text/template">
-     <%= text %>
-  </script>
+  <article data-high="5">
+    <section data-cols="1">
+      <div>
+        <p>
+         Handcrafted 2013 by <a href="http://twitter.com/TimPietrusky" target="_blank">@TimPietrusky</a>.
+        </p>
+      </div>
+    </section>
+  </article>
   
   <?php if ($isLive): ?>
-    <script src="/js/libs.js"></script>
     <script src="/js/main-min.js"></script>
-    <script type="text/javascript">var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-5596313-9']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+    <script type="text/javascript">var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-5596313-10']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
   <?php else: ?>
-    <script src="/js/libs.js"></script>
+    <script src="/js/kudosplease.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/prism.js"></script>
   <?php endif; ?>
   
   <!--[if (gte IE 6)&(lte IE 8)]>

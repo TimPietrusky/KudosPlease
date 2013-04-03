@@ -13,17 +13,22 @@
   # timpietrusky.com
 **/
 
-Kudos = (function() {
+KudosPlease = (function() {
   
   var _$;
   
   // Constructor
-  function Kudos(args) {
+  function KudosPlease(args) {
     _$ = this;
+    
+    if (args.status != undefined) {
+      this.status = args.status;
+    }
     
     this.elements = document.querySelectorAll(args.el);
     this.duration = args.duration;
     this.timer = {};
+    this.currentStatus = '';
     
     for (var i = 0; i < this.elements.length; i++) {
       var el = this.elements[i];
@@ -62,7 +67,7 @@ Kudos = (function() {
   };
   
   // Enter the element
-  Kudos.prototype.enter = function(e) {
+  KudosPlease.prototype.enter = function(e) {
      var that = this,
          id = -1;
     
@@ -83,15 +88,17 @@ Kudos = (function() {
   };
   
   // Leave the element
-  Kudos.prototype.out = function(e) {
+  KudosPlease.prototype.out = function(e) {
     if (!_$.hasClass(this, 'finish')) {
       _$.removeClass(this, 'active');
       clearTimeout(_$.timer[this.getAttribute('data-id')]);
     }
   };
   
-  Kudos.prototype.finish = function(el, increase) {
+  KudosPlease.prototype.finish = function(el, increase) {
+    // Finished
     _$.addClass(el, 'finish');
+    _$.changeStatus(el, 'gamma');
     
     increase = increase || false;
     amount = _$.loadAmount(parseInt(el.getAttribute('data-id'), 10));
@@ -107,13 +114,24 @@ Kudos = (function() {
     _$.save(el.getAttribute('data-id'), amount);
   };
   
+  /*
+   * Change the status of the widget and
+   * aply 3 different classes for the icon
+   * in the middle. 
+   */
+  KudosPlease.prototype.changeStatus = function(el, state) {   
+    if (_$.status != undefined) {
+      _$.removeClass(el, _$.currentStatus);
+      _$.addClass(el, _$.status[state]);
+    }
+  };
   
   /**
    * Helper functions 
    */
   
   // Bind event
-  Kudos.prototype.on = function(el, event, func) {
+  KudosPlease.prototype.on = function(el, event, func) {
     try {
       el.addEventListener(event, func, false);
     } catch(e) {
@@ -122,7 +140,7 @@ Kudos = (function() {
   };
   
   // Add <CODE>class</CODE> to <CODE>el</CODE>
-  Kudos.prototype.addClass = function(el, classes) {
+  KudosPlease.prototype.addClass = function(el, classes) {
     classes = classes.split(',');
     
     for (var i=0; i < classes.length; i++) {
@@ -133,7 +151,7 @@ Kudos = (function() {
   };
   
   // Remove <CODE>class</CODE> to <CODE>el</CODE>
-  Kudos.prototype.removeClass = function(el, classes) {
+  KudosPlease.prototype.removeClass = function(el, classes) {
     classes = classes.split(',');
     
     for (var i = 0; i < classes.length; i++) {
@@ -145,7 +163,7 @@ Kudos = (function() {
    * Returns <CODE>true</CODE> if <CODE>el</CODE> has 
    * the <CODE>class</CODE>, <CODE>false</CODE> otherwise
    */
-  Kudos.prototype.hasClass = function(el, className) {
+  KudosPlease.prototype.hasClass = function(el, className) {
     var classes = el.className.split(' '),
         result = false;
     
@@ -164,18 +182,18 @@ Kudos = (function() {
    * 
    * http://stackoverflow.com/a/4819886/1012875
    */
-  Kudos.prototype.isTouch = function() {
+  KudosPlease.prototype.isTouch = function() {
     return !!('ontouchstart' in window)
         || !!('onmsgesturechange' in window); 
   };
   
-  Kudos.prototype.save = function(id, amount) {
+  KudosPlease.prototype.save = function(id, amount) {
     /*if (localStorage != undefined) {
       localStorage.setItem('kudos:saved:'+id, amount);
     }*/
   };
   
-  Kudos.prototype.loadAmount = function(id) {
+  KudosPlease.prototype.loadAmount = function(id) {
     var result = _$.elements[id].getAttribute('data-amount') || 0;
     
     /*if (localStorage != undefined) {
@@ -192,7 +210,9 @@ Kudos = (function() {
    * which just keeps track of the kudos counter
    * via php & mysql
    */
-  Kudos.prototype.request = function(el, type) {
+  KudosPlease.prototype.request = function(el, type) {
+    var xhr;
+    
     // Initialize
     try {
      xhr = new ActiveXObject("Microsoft.XMLHTTP");
@@ -200,10 +220,12 @@ Kudos = (function() {
      xhr = new XMLHttpRequest(); 
     }
     
-    // 
+    // Change the amount
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        el.setAttribute('data-amount', xhr.responseText);
+        var amount = xhr.responseText;
+        el.setAttribute('data-amount', amount);
+        _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
       }
     }
     
@@ -218,5 +240,5 @@ Kudos = (function() {
     return this.replace(/^\s+|\s+$/g,'');
   });
   
-  return Kudos;
+  return KudosPlease;
 })();

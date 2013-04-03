@@ -70,7 +70,7 @@ class KudosPlease {
    * Increase the Kudos amount and return the new amount. 
    */
   public function post() {
-    $query = 'UPDATE kudosplease SET kudos = kudos + 1';
+    $query = 'UPDATE kudosplease SET kudos = kudos + 1 WHERE url = \'' . $this->url . '\'';
     mysql_query($query);
     
     $this->get();

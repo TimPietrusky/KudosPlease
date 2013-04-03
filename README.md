@@ -14,21 +14,33 @@ A simple Kudos widget with no dependencies. And it's free.
 2. Choose between these two:
   * Add ```https://raw.github.com/TimPietrusky/KudosPlease/master/css/kudosplease.css``` to your page if you don't want to change the CSS
   * Import ```kudoesplease.scss``` into your main SCSS and overwrite the variables or other stuff
-3. Create a new instance of ```KudosPlease```  
+4. Add the HTML for the widget
+
+```html
+<div class="kudos" data-amount="0" data-url="domain.url/my-page"></div>
+```
+
+### Properties
+
+* **data-amount** - the amount of kudos you received
+* **data-url** - the url to the specific site you want to track (without http://)
+
+
+3. Create a new instance of ```KudosPlease``` in JavaScript  
 
 ```javascript
-  /*
-   * Create Kudos Please widget
-   */
-  var kudosPlease = new KudosPlease({ 
-    el : '.kudos',
-    duration : 1500,
-    status : {
-      alpha : 'fontawesome-star',
-      beta : 'fontawesome-glass',
-      gamma : 'fontawesome-bolt'
-    }
-  });
+/*
+ * Create Kudos Please widget
+ */
+ var kudosPlease = new KudosPlease({ 
+  el : '.kudos',
+  duration : 1500,
+  status : {
+    alpha : 'fontawesome-star',
+    beta : 'fontawesome-glass',
+    gamma : 'fontawesome-bolt'
+  }
+});
 ```
 ### Properties
   

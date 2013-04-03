@@ -5,6 +5,9 @@
   with touch & mouse devices. 
   
   Inspired by dcurt.is
+  
+  The heart in this example is served by weloveiconfonts.com,
+  but you can just add a value manually (.finish:before{content:''}).
 
   # 2013 by Tim Pietrusky
   # timpietrusky.com
@@ -204,8 +207,9 @@ Kudos = (function() {
       }
     }
     
+    var url = "?url="+encodeURIComponent(el.getAttribute('data-url'));
     // Open request
-    xhr.open(type, "http://timpietrusky.koding.com/codepen/kudos/index.php", true);
+    xhr.open(type, "http://timpietrusky.koding.com/codepen/kudos/index.php" + url, true);
     xhr.send();
   };
   
@@ -216,19 +220,3 @@ Kudos = (function() {
   
   return Kudos;
 })();
-
-/*
- * DOM ready function 
- * http://dustindiaz.com/smallest-domready-ever
- */
-function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
-
-r(function() {
-  /*
-   * Create "Kudos Please" widget
-   */
-  var kudosPlease = new Kudos({ 
-    el : '.kudos',
-    duration : 1500
-  });
-});

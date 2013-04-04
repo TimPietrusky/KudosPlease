@@ -32,12 +32,12 @@ class KudosPlease {
    */
   protected function connect() {
     // Connect to db
-    $this->link = mysql_connect('localhost', '24963m27407_5', 'xfdLLYYm');
+    $this->link = mysql_connect('localhost', 'user', 'password');
     if (!$this->link) {
       die(mysql_error());
     }
 
-    mysql_select_db('24963m27407_5', $this->link);
+    mysql_select_db('database', $this->link);
   }
   
   /**

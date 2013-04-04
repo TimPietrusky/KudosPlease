@@ -1,13 +1,20 @@
+/**
+ * Compass imports
+ */
+@import "compass/css3/images";
 @import "compass/css3";
-@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+@import "compass/css3/user-interface";
+@import "compass/css3/filter";
+
+/*@import url(http://weloveiconfonts.com/api/?family=fontawesome);
 
 /*
  * Use FontAwesome from weloveiconfonts.com
  */
-[class*="fontawesome-"]:before {
+/*[class*="fontawesome-"]:before {
   font-family: 'FontAwesome', sans-serif;
   font-weight:normal;
-} 
+}*/
 
 /*
  * Kudos

@@ -82,6 +82,7 @@
 <pre><code class="language-javascript">var kudosPlease = new KudosPlease({ 
     el : '.kudos',
     duration : 1500,
+    persistent : true,
     status : {
       alpha: 'fontelico-emo-shoot',
       beta: 'fontelico-emo-shoot',
@@ -91,6 +92,7 @@
         <ul>
           <li><b>el</b> - the class of the kudos dom element</li>
           <li><b>duration</b> - seconds until the kudos amount is increased</li>
+          <li><b>persistent</b> - enables/disables localStorage to prevent the same user from kudoing the same URL again</li>
           <li>
             <b>status</b> - adds a class to the widget depending on the status
             <ul>

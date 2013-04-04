@@ -133,6 +133,10 @@ KudosPlease = (function() {
     }
   };
   
+  /**
+   * Helper functions 
+   */
+  
   /*
    * Bind event
    */
@@ -244,7 +248,15 @@ KudosPlease = (function() {
         el.setAttribute('data-amount', amount);
 
         if (type == 'GET') {
+          // Set status based on amount
           _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+          
+          // When persistence is activated and a value was saved for the URL,
+          // the kudos widget is in status gamma (finished)
+          if (_$.persistent 
+           && localStorage.getItem('kudos:saved:' + el.getAttribute('data-url')) != null) {
+            _$.changeStatus(el, 'gamma');
+          }
         }
 
         if (type == 'POST') {

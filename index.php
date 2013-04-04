@@ -94,7 +94,7 @@
           <li><b>duration</b> - seconds until the kudos amount is increased</li>
           <li><b>persistent</b> - enables/disables localStorage to prevent the same user from kudoing the same URL again</li>
           <li>
-            <b>status</b> - adds a class to the widget depending on the status
+            <b>status</b> - adds a class to the widget which represents the content (e.g. icon) of the widget for every status
             <ul>
               <li><b>alpha</b> - amount of 0</li>
               <li><b>beta</b> - amount > 0</li>

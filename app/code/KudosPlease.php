@@ -1,6 +1,7 @@
 <?php
 
 class KudosPlease {
+  protected $config;
   protected $request;
   protected $output;
   protected $url;
@@ -8,39 +9,61 @@ class KudosPlease {
     
   function __construct() {
 
+    // Load the configuration
+    $this->loadConfig();
+
+    // Get the current request
     $this->request = $_SERVER['REQUEST_METHOD'];
     
+    // Parameter "url" is set
     if (isset($_GET['url'])) {
       $this->url = urldecode($_GET['url']);
 
-        $this->connect();
-        
-        switch ($this->request) {
-          case 'GET' : $this->get();
-          break;
+      // Connect to the database
+      $this->connect();
+
+      // Call methods in dependence on the request
+      switch ($this->request) {
+        case 'GET' : $this->get();
+        break;
             
-          case 'POST' : $this->post();
-          break;
-        }
+        case 'POST' : $this->post();
+        break;
+      }
     }
     
+    // Generate the output
     $this->output();
   }
+
+  /*
+   * Loads the configuration.
+   */
+  protected function loadConfig() {
+    $path = 'etc/config.ini';
+
+    if (file_exists($path)) {
+      require_once($path);
+      $this->config = $config;
+    } else {
+      die("Please add a etc/config.ini");
+    }
+  }
   
-  /**
+  /*
    * Connect to the database.
    */
   protected function connect() {
     // Connect to db
-    $this->link = mysql_connect('localhost', '24963m27407_5', 'xfdLLYYm');
+    $this->link = mysql_connect($this->config->db->host, $this->config->db->user, $this->config->db->password);
     if (!$this->link) {
       die(mysql_error());
     }
 
-    mysql_select_db('24963m27407_5', $this->link);
+    mysql_select_db($this->config->db->database, $this->link);
   }
   
-  /**
+  /*
    * Generate the output with header.
    */
   protected function output() {

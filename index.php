@@ -92,7 +92,7 @@
         <ul>
           <li><b>el</b> - the class of the kudos dom element</li>
           <li><b>duration</b> - seconds until the kudos amount is increased</li>
-          <li><b>persistent</b> - enables/disables localStorage to prevent the same user from kudoing the same URL again</li>
+          <li><b>persistent</b> - [default: true] enables/disables localStorage to prevent the same user from kudoing the same URL again</li>
           <li>
             <b>status</b> - adds a class to the widget which represents the content (e.g. icon) of the widget for every status
             <ul>

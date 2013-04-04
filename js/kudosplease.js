@@ -14,7 +14,7 @@
 **/
 
 KudosPlease = function() {
-  
+
   // Constructor
   function KudosPlease(args) {
     _$ = this;
@@ -23,7 +23,7 @@ KudosPlease = function() {
     // Set the status
     this.status = args.status;
     // Is localStorage enabled?
-    this.persistent = (args.persistent != undefined && args.persistent && localStorage != undefined);
+    this.persistent = args.persistent != undefined ? (args.persistent && localStorage != undefined) : true;
     // Duration of activation
     this.duration = args.duration;
     // setTimeout-ID's

@@ -7,7 +7,6 @@ r(function() {
   new KudosPlease({ 
     el : '.kudos--default',
     duration : 1500,
-    persistent : true,
     status : {
       alpha: '',
       beta: '',

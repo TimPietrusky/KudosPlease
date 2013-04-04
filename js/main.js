@@ -8,8 +8,8 @@ r(function() {
     el : '.kudos--default',
     duration : 1500,
     status : {
-      alpha: '',
-      beta: '',
+      alpha: 'fontelico-emo-shoot',
+      beta: 'fontelico-emo-shoot',
       gamma: 'fontelico-emo-beer'
     }
   });
@@ -24,7 +24,7 @@ r(function() {
     status : {
       alpha: '',
       beta: '',
-      gamma: 'fontelico-emo-beer'
+      gamma: 'fontelico-emo-sunglasses'
     }
   });
 });

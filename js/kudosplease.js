@@ -13,17 +13,16 @@
   # timpietrusky.com
 **/
 
-KudosPlease = function() {
+KudosPlease = (function() {
 
   // Constructor
   function KudosPlease(args) {
-    _$ = this;
     // All widgets
     this.elements = document.querySelectorAll(args.el);
     // Set the status
     this.status = args.status;
     // Is localStorage enabled?
-    this.persistent = args.persistent != undefined ? (args.persistent && localStorage != undefined) : true;
+    this.persistent = args.persistent != undefined ? (args.persistent && window.localStorage != undefined) : true;
     // Duration of activation
     this.duration = args.duration;
     // setTimeout-ID's
@@ -39,16 +38,16 @@ KudosPlease = function() {
       el.setAttribute('data-id', i);
 
       // Load kudos via ajax
-      _$.request(el, 'GET');
+      this.request(el, 'GET', this);
       
       // Amount is 0
-      if (this.loadAmount(i) == 0) {
+      if (this.loadAmount(i, this) == 0) {
         // Set kudos amount
         el.setAttribute('data-amount', 0);
       
         // Init timer id
         this.timer[i] = -1;
-       
+
         // Events
         if (this.isTouch()) {
           this.on(el, 'touchstart', this.enter);
@@ -60,7 +59,7 @@ KudosPlease = function() {
         
       // Load the amount and display it, because user already voted
       } else {
-        this.finish(el);
+        this.finish(el, false, this);
       }
     }
 
@@ -70,50 +69,51 @@ KudosPlease = function() {
   /*
    * Enter the element
    */
-  KudosPlease.prototype.enter = function(e) {
-     var that = this,
-         id = -1;
-    
+  KudosPlease.prototype.enter = function(e, el, _$) {
+    var id = -1;
+
     // Do the kudo twist
-    if (!_$.hasClass(this, 'finish')) {
+    if (!_$.hasClass(el, 'finish')) {
       // Activate the kudo twist
-      _$.addClass(that, 'active');
+      _$.addClass(el, 'active');
     
       // Start timeout
       id = setTimeout(function() {
-        _$.removeClass(that, 'active');
-        _$.finish(that, true);
+        _$.removeClass(el, 'active');
+        _$.finish(el, true, _$);
       }, _$.duration);
     
       // Add timeout id to global object
-      _$.timer[that.getAttribute('data-id')] = id;
+      _$.timer[el.getAttribute('data-id')] = id;
     }
   };
   
-  // Leave the element
-  KudosPlease.prototype.out = function(e) {
-    if (!_$.hasClass(this, 'finish')) {
-      _$.removeClass(this, 'active');
-      clearTimeout(_$.timer[this.getAttribute('data-id')]);
+  /*
+   * Leave the element
+   */
+  KudosPlease.prototype.out = function(e, el, _$) {
+    if (!_$.hasClass(el, 'finish')) {
+      _$.removeClass(el, 'active');
+      clearTimeout(_$.timer[el.getAttribute('data-id')]);
     }
   };
   
   /*
    * State: finished (kudos given)
    */
-  KudosPlease.prototype.finish = function(el, increase) {
+  KudosPlease.prototype.finish = function(el, increase, _$) {
     // Finished
     _$.addClass(el, 'finish');
-    _$.changeStatus(el, 'gamma');
+    _$.changeStatus(el, 'gamma', _$);
 
     increase = increase || false;
-    amount = _$.loadAmount(parseInt(el.getAttribute('data-id'), 10));
+    amount = _$.loadAmount(parseInt(el.getAttribute('data-id'), 10), _$);
     
     if (increase) {
       ++amount;
       
       // Update kudos via ajax
-      _$.request(el, 'POST');
+      _$.request(el, 'POST', _$);
     }
   };
   
@@ -122,7 +122,7 @@ KudosPlease = function() {
    * aply 3 different classes for the icon
    * in the middle. 
    */
-  KudosPlease.prototype.changeStatus = function(el, state) {   
+  KudosPlease.prototype.changeStatus = function(el, state, _$) {
     if (_$.status != undefined) {
 
       if (el.getAttribute('data-status') != undefined) {
@@ -142,10 +142,12 @@ KudosPlease = function() {
    * Bind event
    */
   KudosPlease.prototype.on = function(el, event, func) {
+    var scope = this;
+
     try {
-      el.addEventListener(event, func, false);
+      el.addEventListener(event, function(e) { func(e, el, scope); }, false);
     } catch(e) {
-      el.attachEvent('on' + event, func);
+      el.attachEvent('on' + event, function(e) { func(e, el, scope); });
     }
   };
   
@@ -205,9 +207,9 @@ KudosPlease = function() {
    * Saves the amount of a specific widget into localStorage
    * when <CODE>persistent</CODE> is <CODE>true</CODE>. 
    */
-  KudosPlease.prototype.save = function(el, amount) {
+  KudosPlease.prototype.save = function(el, amount, _$) {
     if (_$.persistent) {
-      localStorage.setItem('kudos:saved:' + el.getAttribute('data-url'), amount);
+      window.localStorage.setItem('kudos:saved:' + el.getAttribute('data-url'), amount);
     }
   };
   
@@ -215,11 +217,11 @@ KudosPlease = function() {
    * Loads the amount of a specific widget from the localStorage
    * when <CODE>persistent</CODE> is <CODE>true</CODE>. 
    */
-  KudosPlease.prototype.loadAmount = function(id) {
+  KudosPlease.prototype.loadAmount = function(id, _$) {
     var result = _$.elements[id].getAttribute('data-amount') || 0;
 
     if (_$.persistent) {
-      if ((amount = localStorage.getItem('kudos:saved:' + _$.elements[id].getAttribute('data-url'))) != undefined) {
+      if ((amount = window.localStorage.getItem('kudos:saved:' + _$.elements[id].getAttribute('data-url'))) != undefined) {
         result = amount;
       }
     }
@@ -232,7 +234,7 @@ KudosPlease = function() {
    * which just keeps track of the kudos counter
    * via php & mysql
    */
-  KudosPlease.prototype.request = function(el, type) {
+  KudosPlease.prototype.request = function(el, type, _$) {
     var xhr,
         kudos = _$;
 
@@ -251,18 +253,18 @@ KudosPlease = function() {
 
         if (type == 'GET') {
           // Set status based on amount
-          kudos.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+          kudos.changeStatus(el, amount == 0 ? 'alpha' : 'beta', kudos);
 
           // When persistence is activated and a value was saved for the URL,
           // the kudos widget is in status gamma (finished)
           if (kudos.persistent 
-           && localStorage.getItem('kudos:saved:' + el.getAttribute('data-url')) != null) {
-            kudos.changeStatus(el, 'gamma');
+           && window.localStorage.getItem('kudos:saved:' + el.getAttribute('data-url')) != null) {
+            kudos.changeStatus(el, 'gamma', kudos);
           }
         }
 
         if (type == 'POST') {
-          kudos.save(el, amount);
+          kudos.save(el, amount, kudos);
         }
       }
     }
@@ -279,4 +281,4 @@ KudosPlease = function() {
   });
 
   return KudosPlease;
-}();
+})();

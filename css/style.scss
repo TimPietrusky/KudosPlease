@@ -6,6 +6,13 @@
 @import "assets/assets";
 
 /*
+ * prism
+ */
+pre[class*="language-"] {
+  background:$color-epsilon;
+}
+
+/*
  * Kudos Please widget
  */
 $kudos_color_alpha: $color-alpha;
@@ -40,9 +47,7 @@ h1 {
 
 h2 {
   color:$color-gamma;
-  border-bottom:.25em solid #fff;
-  padding: 0 0 .25em 0;
-  margin:.5em 0 .25em 0;
+  margin:.5em 0 .5em 0;
 }
 
 a {
@@ -100,7 +105,7 @@ img {
 }
 
 p {
-  padding:.25em .75em;
+  padding:.25em .5em;
 }
 
 pre {
@@ -136,22 +141,51 @@ article[data-high="2"] {
   background:#fff;
 
   > section {
-    background:$color-alpha;
+    &.section--alpha {
+      background:$color-alpha;
 
-    div[data-type="1"] {
-      position:absolute;
-      background:#fff;
-      padding-top: .25em;
+      div[data-type="1"] {
+        position:absolute;
+        background:#fff;
+        padding-top: .25em;
 
-      @include breakpoint(baby-bear) {
-        position:relative;
+        @include breakpoint(baby-bear) {
+          position:relative;
+        }
+      }
+
+      div[data-type="2"] {
+        padding-top:.5em;
+        float:right;
+        min-height:16em;
       }
     }
 
-    div[data-type="2"] {
-      padding-top:.5em;
-      float:right;
-      min-height:16em;
+    &.section--beta {
+      background:$color-gamma;
+
+      h2 {
+        color:#fff;
+      }
+
+      div[data-type="1"] {
+        position:absolute;
+        right:0;
+        background:#fff;
+        padding-top: .25em;
+
+        @include breakpoint(baby-bear) {
+          position:relative;
+          right:auto;
+        }
+      }
+
+      div[data-type="2"] {
+        padding-top:.5em;
+        padding-left:.5em;
+        float:left;
+        min-height:16em;
+      }
     }
   }
 }

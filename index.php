@@ -38,15 +38,14 @@
   </article>
   
   <article data-high="2">
-    <section data-cols="2">
+    <section data-cols="2" class="section--alpha">
       <div data-type="1">
-        <div class="kudos" data-amount="0" data-url="kudosplease.com"></div>
+        <div class="kudos kudos--default" data-amount="0" data-url="kudosplease.com"></div>
       </div>
       <div data-type="2">
-        <p>An one-element <b>kudos widget</b> with no dependencies.</p>
+        <p>A one-element <b>kudos widget</b> with no dependencies.</p>
         <p>Works on touch and normal devices. </p>
         <p>The widget interacts with the <b>Kudos Please API</b> so you don't have to worry about saving the amount.</p>
-        
         <p>
           <a href="https://github.com/TimPietrusky/KudosPlease" target="_blank">
           <button class="button--alpha">Find it on GitHub</button>
@@ -66,7 +65,8 @@
         <pre><code class="language-markup">&lt;link rel="stylesheet" href="kudosplease-min.css"></code></pre>
       </div>
       <div data-type="2">
-        <h2>2. Insert HTML</h2>
+        <h2>2. Insert the widget</h2>
+        <b>HTML</b>
         <pre><code class="language-markup">&lt;div class="kudos" data-amount="0" data-url="domain.tld/my-awesome-article">&lt;/div></code></pre>
         <ul>
           <li><b>data-amount</b> - the amount of kudos for a specific url</li>
@@ -79,7 +79,7 @@
       <div data-type="3">
       
         <h2>3. Create the widget</h2>
-<pre><code class="language-javascript">var kudosPlease = new KudosPlease({ 
+        <pre><code class="language-javascript">new KudosPlease({ 
     el : '.kudos',
     duration : 1500,
     persistent : true,
@@ -88,7 +88,7 @@
       beta: 'fontelico-emo-shoot',
       gamma: 'fontelico-emo-beer'
     }
-  });</code></pre>
+});</code></pre>
         <ul>
           <li><b>el</b> - the class of the kudos dom element</li>
           <li><b>duration</b> - seconds until the kudos amount is increased</li>
@@ -102,6 +102,31 @@
             </ul>
           </li>
         </ul>
+      </div>
+    </section>
+  </article>
+  
+  <article data-high="2">
+    <section data-cols="2" class="section--beta">
+      <div data-type="2">
+        <h2>Persistence disabled</h2>
+        <p>
+          After you reload the page, you can use the widget again. 
+        </p>
+        
+<pre><code class="language-javascript">new KudosPlease({ 
+    el : '.kudos--persistent',
+    duration : 1500,
+    persistent : false,
+    status : {
+      alpha: '',
+      beta: '',
+      gamma: 'fontelico-emo-beer'
+    }
+});</code></pre>
+      </div>
+      <div data-type="1">
+        <div class="kudos kudos--persistent" data-amount="0" data-url="kudosplease.com/persistent"></div>
       </div>
     </section>
   </article>

@@ -13,14 +13,11 @@
   # timpietrusky.com
 **/
 
-KudosPlease = (function() {
-  
-  var _$;
+KudosPlease = function() {
   
   // Constructor
   function KudosPlease(args) {
     _$ = this;
-
     // All widgets
     this.elements = document.querySelectorAll(args.el);
     // Set the status
@@ -31,9 +28,7 @@ KudosPlease = (function() {
     this.duration = args.duration;
     // setTimeout-ID's
     this.timer = {};
-    // @TODO [TimPietrusky] - This should be an array
-    this.currentStatus = '';
-    
+
     for (var i = 0; i < this.elements.length; i++) {
       var el = this.elements[i];
       
@@ -42,7 +37,7 @@ KudosPlease = (function() {
       
       // Identify element
       el.setAttribute('data-id', i);
-      
+
       // Load kudos via ajax
       _$.request(el, 'GET');
       
@@ -68,8 +63,10 @@ KudosPlease = (function() {
         this.finish(el);
       }
     }
+
+    return this;
   };
-  
+
   /*
    * Enter the element
    */
@@ -108,7 +105,7 @@ KudosPlease = (function() {
     // Finished
     _$.addClass(el, 'finish');
     _$.changeStatus(el, 'gamma');
-    
+
     increase = increase || false;
     amount = _$.loadAmount(parseInt(el.getAttribute('data-id'), 10));
     
@@ -127,9 +124,13 @@ KudosPlease = (function() {
    */
   KudosPlease.prototype.changeStatus = function(el, state) {   
     if (_$.status != undefined) {
-      _$.removeClass(el, _$.currentStatus);
+
+      if (el.getAttribute('data-status') != undefined) {
+        _$.removeClass(el, _$.status[el.getAttribute('data-status')]);
+      }
+
       _$.addClass(el, _$.status[state]);
-      _$.currentStatus = _$.status[state];
+      el.setAttribute('data-status', state);
     }
   };
   
@@ -218,7 +219,7 @@ KudosPlease = (function() {
     var result = _$.elements[id].getAttribute('data-amount') || 0;
 
     if (_$.persistent) {
-      if ((amount = localStorage.getItem('kudos:saved:' + _$.elements[id].getAttribute('data-url'))) != null) {
+      if ((amount = localStorage.getItem('kudos:saved:' + _$.elements[id].getAttribute('data-url'))) != undefined) {
         result = amount;
       }
     }
@@ -232,16 +233,17 @@ KudosPlease = (function() {
    * via php & mysql
    */
   KudosPlease.prototype.request = function(el, type) {
-    var xhr;
-    
+    var xhr,
+        kudos = _$;
+
     // Initialize
     try {
      xhr = new ActiveXObject("Microsoft.XMLHTTP");
     } catch(e) {
      xhr = new XMLHttpRequest(); 
     }
-    
-    // Change the amount
+
+    // Response received
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
         var amount = xhr.responseText;
@@ -249,22 +251,22 @@ KudosPlease = (function() {
 
         if (type == 'GET') {
           // Set status based on amount
-          _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
-          
+          kudos.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+
           // When persistence is activated and a value was saved for the URL,
           // the kudos widget is in status gamma (finished)
-          if (_$.persistent 
+          if (kudos.persistent 
            && localStorage.getItem('kudos:saved:' + el.getAttribute('data-url')) != null) {
-            _$.changeStatus(el, 'gamma');
+            kudos.changeStatus(el, 'gamma');
           }
         }
 
         if (type == 'POST') {
-          _$.save(el, amount);
+          kudos.save(el, amount);
         }
       }
     }
-    
+
     var url = "?url="+encodeURIComponent(el.getAttribute('data-url'));
     // Open request
     xhr.open(type, "http://api.kudosplease.com/" + url, true);
@@ -275,6 +277,6 @@ KudosPlease = (function() {
   ''.trim || (String.prototype.trim = function(){
     return this.replace(/^\s+|\s+$/g,'');
   });
-  
+
   return KudosPlease;
-})();
+}();

@@ -32,12 +32,12 @@ class KudosPlease {
    */
   protected function connect() {
     // Connect to db
-    $this->link = mysql_connect('localhost', 'user', 'password');
+    $this->link = mysql_connect('localhost', '24963m27407_5', 'xfdLLYYm');
     if (!$this->link) {
       die(mysql_error());
     }
 
-    mysql_select_db('database', $this->link);
+    mysql_select_db('24963m27407_5', $this->link);
   }
   
   /**
@@ -60,6 +60,7 @@ class KudosPlease {
     // Create new row for the unkown url
     if (empty($row->kudos)) {
       $query = 'INSERT IGNORE INTO kudosplease (url, kudos) VALUES (\'' . $this->url . '\', 0)';
+      mysql_query($query, $this->link);
       $this->output = 0;
 
     // Show the amount

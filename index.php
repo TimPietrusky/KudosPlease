@@ -49,7 +49,7 @@
         
         <p>
           <a href="https://github.com/TimPietrusky/KudosPlease" target="_blank">
-          <button class="button--alpha">Fork it on GitHub</button>
+          <button class="button--alpha">Find it on GitHub</button>
         </a>
         </p>  
       </div>
@@ -107,7 +107,7 @@
   <article data-high="3">
     <section data-cols="2">
         <div>
-          <a href="http://twitter.com/share?text=Kudos+Widget+without+any+dependencies+and+Kudos+API+&url=http://kudosplease.com/" target="_blank">
+          <a href="http://twitter.com/share?text=Kudos+widget+without+any+dependencies+by+@TimPietrusky&url=http://kudosplease.com/" target="_blank">
           <button>
             Spread the word
           </button>
@@ -116,7 +116,7 @@
         <div>
           <a href="https://github.com/TimPietrusky/KudosPlease" target="_blank">
           <button>
-            Fork it on GitHub
+            Find it on GitHub
           </button>
           </a>
         </div>

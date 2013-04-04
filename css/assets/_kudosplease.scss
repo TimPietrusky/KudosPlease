@@ -1,5 +1,4 @@
 @import "compass/css3";
-@import url(http://weloveiconfonts.com/api/?family=fontelico);
 
 /*
  * Use Fontelico from weloveiconfonts.com
@@ -25,7 +24,7 @@ $kudos_color_gamma: $color-delta; // default border
   position:relative;
   width:$kudos_width;
   height:$kudos_height;
-  margin:.95em auto 1.5em auto;
+  margin:.35em auto 1.5em auto;
   background:$kudos_color_alpha;
   box-shadow:
     inset 0 0 0 .25em $kudos_color_gamma,
@@ -35,6 +34,7 @@ $kudos_color_gamma: $color-delta; // default border
   line-height:$kudos_height;
   text-align:center;
   border-radius:50%;
+  @include user-select(none);
   @include transition(box-shadow $kudos_duration_finish / 2 ease-out);
   
   &:before {

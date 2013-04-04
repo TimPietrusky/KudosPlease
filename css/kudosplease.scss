@@ -34,11 +34,14 @@ $kudos_color_beta: #cc3d39;
   line-height:$kudos_height;
   text-align:center;
   border-radius:50%;
+  @include user-select(none);
   @include transition(box-shadow $kudos_duration_finish / 2 ease-out);
   
   &:before {
     @include transition(font-size $kudos_duration_finish ease-in);
-    font-size:0;
+    font-size:1.75em;
+    line-height:1.75;
+    color:$kudos_color_alpha;
   }
   
   &.active {
@@ -75,8 +78,8 @@ $kudos_color_beta: #cc3d39;
     
     &:before {  
       font-size:2.25em;
+      line-height:2.25;
       color:$kudos_color_alpha;
-      line-height:$kudos_height / 2.125;
     }
   }
   

@@ -20,21 +20,25 @@ KudosPlease = (function() {
   // Constructor
   function KudosPlease(args) {
     _$ = this;
-    
-    if (args.status != undefined) {
-      this.status = args.status;
-    }
-    
+
+    // All widgets
     this.elements = document.querySelectorAll(args.el);
+    // Set the status
+    this.status = args.status;
+    // Is localStorage enabled?
+    this.persistent = (args.persistent != undefined && args.persistent && localStorage != undefined);
+    // Duration of activation
     this.duration = args.duration;
+    // setTimeout-ID's
     this.timer = {};
+    // @TODO [TimPietrusky] - This should be an array
     this.currentStatus = '';
     
     for (var i = 0; i < this.elements.length; i++) {
       var el = this.elements[i];
       
       // Delete all elements from localStorage
-      localStorage.setItem('kudos:saved:'+i, 0);
+      // localStorage.setItem('kudos:saved:'+el.getAttribute('data-url'), 0);
       
       // Identify element
       el.setAttribute('data-id', i);
@@ -66,7 +70,9 @@ KudosPlease = (function() {
     }
   };
   
-  // Enter the element
+  /*
+   * Enter the element
+   */
   KudosPlease.prototype.enter = function(e) {
      var that = this,
          id = -1;
@@ -95,6 +101,9 @@ KudosPlease = (function() {
     }
   };
   
+  /*
+   * State: finished (kudos given)
+   */
   KudosPlease.prototype.finish = function(el, increase) {
     // Finished
     _$.addClass(el, 'finish');
@@ -109,9 +118,6 @@ KudosPlease = (function() {
       // Update kudos via ajax
       _$.request(el, 'POST');
     }
-    
-    el.setAttribute('data-amount', amount);
-    _$.save(el.getAttribute('data-id'), amount);
   };
   
   /*
@@ -127,11 +133,9 @@ KudosPlease = (function() {
     }
   };
   
-  /**
-   * Helper functions 
+  /*
+   * Bind event
    */
-  
-  // Bind event
   KudosPlease.prototype.on = function(el, event, func) {
     try {
       el.addEventListener(event, func, false);
@@ -140,7 +144,9 @@ KudosPlease = (function() {
     }
   };
   
-  // Add <CODE>class</CODE> to <CODE>el</CODE>
+  /*
+   * Add <CODE>class</CODE> to <CODE>el</CODE>
+   */
   KudosPlease.prototype.addClass = function(el, classes) {
     classes = classes.split(',');
     
@@ -151,7 +157,9 @@ KudosPlease = (function() {
     }
   };
   
-  // Remove <CODE>class</CODE> to <CODE>el</CODE>
+  /*
+   * Remove <CODE>class</CODE> to <CODE>el</CODE>
+   */
   KudosPlease.prototype.removeClass = function(el, classes) {
     classes = classes.split(',');
     
@@ -188,20 +196,28 @@ KudosPlease = (function() {
         || !!('onmsgesturechange' in window); 
   };
   
-  KudosPlease.prototype.save = function(id, amount) {
-    /*if (localStorage != undefined) {
-      localStorage.setItem('kudos:saved:'+id, amount);
-    }*/
+  /*
+   * Saves the amount of a specific widget into localStorage
+   * when <CODE>persistent</CODE> is <CODE>true</CODE>. 
+   */
+  KudosPlease.prototype.save = function(el, amount) {
+    if (_$.persistent) {
+      localStorage.setItem('kudos:saved:' + el.getAttribute('data-url'), amount);
+    }
   };
   
+  /*
+   * Loads the amount of a specific widget from the localStorage
+   * when <CODE>persistent</CODE> is <CODE>true</CODE>. 
+   */
   KudosPlease.prototype.loadAmount = function(id) {
     var result = _$.elements[id].getAttribute('data-amount') || 0;
-    
-    /*if (localStorage != undefined) {
-      if ((amount = localStorage.getItem('kudos:saved:'+id)) != null) {
+
+    if (_$.persistent) {
+      if ((amount = localStorage.getItem('kudos:saved:' + _$.elements[id].getAttribute('data-url'))) != null) {
         result = amount;
       }
-    }*/
+    }
     
     return result;
   };
@@ -229,6 +245,10 @@ KudosPlease = (function() {
 
         if (type == 'GET') {
           _$.changeStatus(el, amount == 0 ? 'alpha' : 'beta');
+        }
+
+        if (type == 'POST') {
+          _$.save(el, amount);
         }
       }
     }

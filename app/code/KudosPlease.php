@@ -40,13 +40,13 @@ class KudosPlease {
    * Loads the configuration.
    */
   protected function loadConfig() {
-    $path = 'etc/config.ini';
+    $path = 'etc/config.php';
 
     if (file_exists($path)) {
       require_once($path);
       $this->config = $config;
     } else {
-      die("Please add a etc/config.ini");
+      die("Please copy the 'etc/config_sample.php' into 'etc/config.php' and change the configuration.");
     }
   }
   

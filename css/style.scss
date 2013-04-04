@@ -105,7 +105,7 @@ img {
 }
 
 p {
-  padding:.25em .5em;
+  padding:.25em 0;
 }
 
 pre {
@@ -155,7 +155,7 @@ article[data-high="2"] {
       }
 
       div[data-type="2"] {
-        padding-top:.5em;
+        padding:.5em .5em 0 .5em;
         float:right;
         min-height:16em;
       }
@@ -181,8 +181,7 @@ article[data-high="2"] {
       }
 
       div[data-type="2"] {
-        padding-top:.5em;
-        padding-left:.5em;
+        padding:.5em .5em 0 .5em;
         float:left;
         min-height:16em;
       }

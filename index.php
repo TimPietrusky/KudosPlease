@@ -121,7 +121,7 @@
     status : {
       alpha: '',
       beta: '',
-      gamma: 'fontelico-emo-beer'
+      gamma: 'fontelico-emo-sunglasses'
     }
 });</code></pre>
       </div>

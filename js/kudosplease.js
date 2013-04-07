@@ -19,9 +19,9 @@
   // It's faster: http://jsperf.com/use-class-list-with-polyfill
   var classList = document.documentElement.classList,
       support = !!classList,
-      inject = function(fName, polyFunc){
-       return support ? function(e, param){return e.classList[fName](param);} : polyFunc;
-     },
+      inject = function(fname, polyFunc) {
+        return support ? function(e, param) {if (param != '') {return e.classList[fname](param);}} : polyFunc;
+      },
 
    /*
     * Add <CODE>class</CODE> to <CODE>el</CODE>
@@ -186,7 +186,6 @@
    * which just keeps track of the kudos counter
    * via php & mysql
    */
-
   request = function(el, type, _$) {
     var xhr;
 
@@ -227,59 +226,60 @@
     xhr.send();
   };
 
-   // Constructor
-   function KudosPlease(args) {
-     // All widgets
-     this.elements = document.querySelectorAll(args.el);
-     // Set the status
-     this.status = args.status;
-     // Is localStorage enabled?
-     this.persistent = args.persistent != undefined ? (args.persistent && window.localStorage != undefined) : true;
-     // Duration of activation
-     this.duration = args.duration;
-     // setTimeout-ID's
-     this.timer = {};
+  /* 
+   * Constructor
+   */
+  function KudosPlease(args) {
+    // All widgets
+    this.elements = document.querySelectorAll(args.el);
+    // Set the status
+    this.status = args.status;
+    // Is localStorage enabled?
+    this.persistent = args.persistent != undefined ? (args.persistent && window.localStorage != undefined) : true;
+    // Duration of activation
+    this.duration = args.duration;
+    // setTimeout-ID's
+    this.timer = {};
 
-     for (var i = 0; i < this.elements.length; i++) {
-       var el = this.elements[i];
+    for (var i = 0; i < this.elements.length; i++) {
+      var el = this.elements[i];
 
-       // Delete all elements from localStorage
-       // localStorage.setItem('kudos:saved:'+el.getAttribute('data-url'), 0);
+      // Delete all elements from localStorage
+      // localStorage.setItem('kudos:saved:'+el.getAttribute('data-url'), 0);
 
-       // Identify element
-       el.setAttribute('data-id', i);
+      // Identify element
+      el.setAttribute('data-id', i);
 
-       // Load kudos via ajax
-       request(el, 'GET', this);
+      // Load kudos via ajax
+      request(el, 'GET', this);
 
-       // Amount is 0
-       if (loadAmount(i, this) == 0) {
-         // Set kudos amount
-         el.setAttribute('data-amount', 0);
+      // Amount is 0
+      if (loadAmount(i, this) == 0) {
+        // Set kudos amount
+        el.setAttribute('data-amount', 0);
 
-         // Init timer id
-         this.timer[i] = -1;
+        // Init timer id
+        this.timer[i] = -1;
 
-         // Events, both touch and mouse
-         on(el, 'touchstart', touchEnter, this);
-         on(el, 'touchend', out, this);
+        // Events, both touch and mouse
+        on(el, 'touchstart', touchEnter, this);
+        on(el, 'touchend', out, this);
+        on(el, 'mouseover', enter, this);
+        on(el, 'mouseout', out, this);
 
-         on(el, 'mouseover', enter, this);
-         on(el, 'mouseout', out, this);
+      // Load the amount and display it, because user already voted
+      } else {
+        finish(el, false, this);
+      }
+    }
 
-       // Load the amount and display it, because user already voted
-       } else {
-         finish(el, false, this);
-       }
-     }
+    return this;
+  }
 
-     return this;
-   }
+  // trim polyfill
+  ''.trim || (String.prototype.trim = function(){
+    return this.replace(/^\s+|\s+$/g,'');
+  });
 
-   // trim polyfill
-   ''.trim || (String.prototype.trim = function(){
-     return this.replace(/^\s+|\s+$/g,'');
-   });
-
-   return KudosPlease;
+  return KudosPlease;
  })();

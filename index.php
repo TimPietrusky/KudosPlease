@@ -1,3 +1,4 @@
+<?php header('Content-Type: text/html; charset=utf-8'); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,7 +33,10 @@
   <article data-high="1">
     <section data-cols="1">
       <div>
-        <h1>Kudos Please</h1>
+        <h1>ku·dos Please</h1>
+      </div>
+      <div>
+        <p>To gain kudos is to earn respect and recognition (<a href="http://www.urbandictionary.com/define.php?term=kudos" target="_blank">Urbandirectory</a>).</p>
       </div>
     </section>
   </article>
@@ -109,21 +113,23 @@
   <article data-high="2">
     <section data-cols="2" class="section--beta">
       <div data-type="2">
-        <h2>Persistence disabled</h2>
-        <p>
-          After you reload the page, you can use the widget again. 
-        </p>
-        
-<pre><code class="language-javascript">new KudosPlease({ 
-    el : '.kudos--persistent',
-    duration : 1500,
-    persistent : false,
-    status : {
-      alpha: '',
-      beta: '',
-      gamma: 'fontelico-emo-sunglasses'
-    }
-});</code></pre>
+        <div>
+          <h2>Persistence disabled</h2>
+          <p>
+            After you reload the page, you can use the widget again. 
+          </p>
+          
+  <pre><code class="language-javascript">new KudosPlease({ 
+      el : '.kudos--persistent',
+      duration : 1500,
+      persistent : false,
+      status : {
+        alpha: '',
+        beta: '',
+        gamma: 'fontelico-emo-sunglasses'
+      }
+  });</code></pre>
+        </div>
       </div>
       <div data-type="1">
         <div class="kudos kudos--persistent" data-amount="0" data-url="kudosplease.com/persistent"></div>
@@ -134,7 +140,7 @@
   <article data-high="3">
     <section data-cols="2">
         <div>
-          <a href="http://twitter.com/share?text=Kudos+widget+without+any+dependencies+by+@TimPietrusky&url=http://kudosplease.com/" target="_blank">
+          <a href="http://twitter.com/share?text=To+gain+kudos+is+to+earn+respect+and+recognition&url=http://kudosplease.com/" target="_blank">
           <button>
             Spread the word
           </button>

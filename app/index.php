@@ -1,8 +1,8 @@
-<?
+<?php
 
 include_once('code/KudosPlease.php');
 
-// Start Kudos Please!!!
+// test
 new KudosPlease();
 
 ?>

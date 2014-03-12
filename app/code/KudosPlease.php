@@ -6,6 +6,7 @@ class KudosPlease {
   protected $output;
   protected $url;
   protected $link;
+  protected $mysqli;
     
   function __construct() {
 
@@ -14,6 +15,7 @@ class KudosPlease {
 
     // Get the current request
     $this->request = $_SERVER['REQUEST_METHOD'];
+
     
     // Parameter "url" is set
     if (isset($_GET['url'])) {
@@ -54,13 +56,16 @@ class KudosPlease {
    * Connect to the database.
    */
   protected function connect() {
-    // Connect to db
-    $this->link = mysql_connect($this->config->db->host, $this->config->db->user, $this->config->db->password);
-    if (!$this->link) {
-      die(mysql_error());
+    // Connect
+    $this->mysqli = new mysqli($this->config->db->host, $this->config->db->user, $this->config->db->password, $this->config->db->database);
+
+    // Handle error
+    if (mysqli_connect_error()) {
+      die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
     }
 
-    mysql_select_db($this->config->db->database, $this->link);
+    // Escape input
+    $this->url = $this->mysqli->real_escape_string($this->url);
   }
   
   /*
@@ -76,14 +81,12 @@ class KudosPlease {
    * Returns the current Kudos amount.
    */
   public function get() {
-    $query = 'SELECT * FROM kudosplease where url = \'' . $this->url . '\'';
-    $result = mysql_query($query, $this->link);
-    $row = mysql_fetch_object($result);
+    $result = $this->mysqli->query('SELECT * FROM kudosplease where url = \'' . $this->url . '\'');
+    $row = mysqli_fetch_object($result);
 
     // Create new row for the unkown url
     if (empty($row->kudos)) {
-      $query = 'INSERT IGNORE INTO kudosplease (url, kudos) VALUES (\'' . $this->url . '\', 0)';
-      mysql_query($query, $this->link);
+      $this->mysqli->query('INSERT IGNORE INTO kudosplease (url, kudos) VALUES (\'' . $this->url . '\', 0)');
       $this->output = 0;
 
     // Show the amount
@@ -96,9 +99,7 @@ class KudosPlease {
    * Increase the Kudos amount and return the new amount. 
    */
   public function post() {
-    $query = 'UPDATE kudosplease SET kudos = kudos + 1 WHERE url = \'' . $this->url . '\'';
-    mysql_query($query, $this->link);
-    
+    $this->mysqli->query('UPDATE kudosplease SET kudos = kudos + 1 WHERE url = \'' . $this->url . '\'');
     $this->get();
   }
 }

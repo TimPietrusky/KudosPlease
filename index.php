@@ -21,6 +21,7 @@
 </head>
 
 <?php
+
   $isLive = false;
   // Local vs production
   if (preg_match('!(kudosplease.com)!', $_SERVER['HTTP_HOST']) == 1) {

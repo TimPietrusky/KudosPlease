@@ -12,7 +12,7 @@
     $obj = new stdClass;
     foreach($array as $k => $v) {
        if(is_array($v)) {
-          $obj->{$k} = array_to_object($v); //RECURSION
+          $obj->{$k} = array_to_object($v);
        } else {
           $obj->{$k} = $v;
        }

@@ -161,7 +161,7 @@
     <section data-cols="1">
       <div>
         <p>
-         Handcrafted 2013 - 2014 by <a href="http://twitter.com/TimPietrusky" target="_blank">@TimPietrusky</a>.
+         Handcrafted 2013 - 2015 by <a href="http://twitter.com/TimPietrusky" target="_blank">@TimPietrusky</a>.
         </p>
       </div>
     </section>
